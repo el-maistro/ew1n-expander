@@ -1,0 +1,24 @@
+body{
+    width: 100%;
+    background-color: black;
+    color:white;
+    padding: auto;
+}
+
+.header{
+    background-color: white;
+    color:black;
+    border: 1px solid black;
+    width:100%;
+}
+
+.main{
+    position: relative;
+    margin-right: 1.5em;
+}
+
+.body-ext{
+    border: 1px solid white;
+    position: relative;
+    width: 100%;
+}

@@ -1,0 +1,23 @@
+{
+    "manifest_version" : 3,
+    "name" : "Expansor de texto sencillo",
+    "version" : "1.0.0",
+
+    "action" : {
+        "default_popup" : "popup.html"
+    },
+
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "content_scripts": [
+        {
+          "js": ["scripts/content.js"],
+          "matches": [
+            "*://*/*"
+          ]
+        }
+      ],
+
+    "permissions" : ["storage"]
+}

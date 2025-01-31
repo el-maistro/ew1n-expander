@@ -4,7 +4,11 @@ function getData(){
     const divTextos = document.getElementById("textos");
 
     chrome.storage.local.get( ["ew1n-expander"]).then(async (result) => {
-        objData = await result["ew1n-expander"];
+        objData = result["ew1n-expander"] || [];
+        if(!Array.isArray(objData)){
+            console.log("No hay datos guardados");
+            objData = [];
+        }
         const html = objData.map( (item) => {
             return `<tr>
                         <td>
@@ -33,11 +37,20 @@ function getData(){
 }
 
 function addTrigger(trigger, texto){
-    objData.push({"trigger" : trigger, "text" : texto});
-    chrome.storage.local.set( {"ew1n-expander" : objData}).then( () => {
-        console.log("Agregado!!!");
-    });
-
+    if(!trigger || !texto){
+        console.log("No se puede agregar datos vacios");
+        return;
+    }
+    const obFind = objData.find( (item) => item.trigger === trigger);
+    console.log("obfind: ",obFind);
+    if(!obFind){
+        objData.push({"trigger" : trigger, "text" : texto});
+        chrome.storage.local.set( {"ew1n-expander" : objData}).then( () => {
+            console.log("Agregado!!!");
+        });
+    } else {
+        console.log("Ya existe el trigger");
+    }
     getData();
 }
 

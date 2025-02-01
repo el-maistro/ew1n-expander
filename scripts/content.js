@@ -16,12 +16,37 @@
 //         });
 //     }
 // });
+const ew1nregex = /-\w+/g;
 
-document.addEventListener("keydown", (e) => {
+async function expandirTrigger(trigger){
+    return new Promise( (doneomar) => {
+        chrome.runtime.sendMessage( {action: "getData"}, (response) => {
+            const textoExpandido = response.find( (item) => item.trigger === trigger);
+            doneomar(textoExpandido ? textoExpandido.text : "");
+        });
+    });
+}
+
+document.addEventListener("keydown", async (e) => {
     const target = e.target;
     if(target.matches("input[type='text'], textarea, div[contenteditable='true']")){
-        //Contenido editable
-        console.log(target);
+        const texto = target.value || target.innerText;
+        const triggersEncontrados = texto.match(ew1nregex);
+
+        if(!triggersEncontrados){ return;}
+
+        for(const trigger of triggersEncontrados) {
+            let textoExpandido = await expandirTrigger(trigger);
+            console.log("found: ", trigger, " expandido: ", textoExpandido);
+            if(textoExpandido !== ""){
+                const nuevoTexto = texto.replace(trigger, textoExpandido);
+                if(target.tagName === "DIV"){
+                    target.innerText = nuevoTexto;
+                } else {
+                    target.value = nuevoTexto;
+                }
+            }
+        }
     }
 });
 

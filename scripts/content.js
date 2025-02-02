@@ -1,23 +1,3 @@
-// const footer = document.createElement("div");
-// footer.innerHTML = `<marquee style="position:fixed; top:0px"><h1>Injected on ${window.location.host}</h1></marquee>`;
-
-// document.body.append(footer);
-
-// const elementos = document.querySelectorAll("input[type='text'], textarea, div[contenteditable='true']");
-// elementos.forEach( (elem) => {
-//     if(elem.contentEditable){
-//         elem.addEventListener("keydown", (e) => {
-//             if(e.key === "-"){
-//                 //Inicio del trigger
-//                 e.preventDefault();
-//                 elem.value = "-";
-//                 elem.value = elem.value + "trigger";
-//             }
-//         });
-//     }
-// });
-const ew1nregex = /-\w+/g;
-
 async function expandirTrigger(trigger){
     return new Promise( (doneomar) => {
         chrome.runtime.sendMessage( {action: "getData"}, (response) => {
@@ -27,10 +7,12 @@ async function expandirTrigger(trigger){
     });
 }
 
-document.addEventListener("keydown", async (e) => {
+document.addEventListener("keyup", async (e) => {
+    const ew1nregex = /-\w+/g;
     const target = e.target;
-    if(target.matches("input[type='text'], textarea, div[contenteditable='true']")){
-        const texto = target.value || target.innerText;
+    if(target.matches("input[type='text'], textarea, div")){
+        let texto = target.value || target.innerText;
+        texto += ' ';
         const triggersEncontrados = texto.match(ew1nregex);
 
         if(!triggersEncontrados){ return;}

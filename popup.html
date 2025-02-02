@@ -5,18 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./popup.css" />
 </head>
-<body>
+<body class="body body-default">
     <div class="main">
         <div class="header">
             <h3>Expansor de texto v1.0 por eW1n</h3>
         </div>
         <div class="body-ext">
-            <p>Agregar nuevo expansor</p>
-            <label for="new_trigger">Disparador</label><input type="text" id="new_trigger">
-            <label for="new_text">Disparador</label><input type="text" id="new_text">
-            <button id="add-btn">Agregar</button>
+            <table>
+                <thead>
+                    <th colspan="2">Agregar nuevo expansor</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Disparador</td>
+                        <td><input style="width:95%" type="text" id="new_trigger"></td>
+                    </tr>
+                    <tr>
+                        <td>Texto</td>
+                        <td><textarea style="width:95%" id="new_text"></textarea></td>
+                    </tr>
+                    <tr><td>&nbsp;</td><td><button class="btn" style="width:97%" id="add-btn">Agregar</button></td></tr>
+                </tbody>
+            </table>
+
         </div>
         <div id="textos"></div>
+
+        <!-- editar div -->
+        <div class="editar-div editar-div-oculto">
+            <table style="width:100%; height:100%">
+                <div id="trigger_viejo" style="visibility: hidden;"></div>
+                <thead>
+                    <th align="left">
+                        <button class="btn" id="done-edit-cancel">&lt</button>
+                    </th>
+                    <th align="left">Editar Disparador</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Disparador</td>
+                        <td><input style="width:95%" type="text" id="new_trigger_edit"></td>
+                    </tr>
+                    <tr>
+                        <td>Texto</td>
+                        <td><textarea style="width:95%; height:100%" id="new_text_edit"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btnEdit" id="done-edit">Guardar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="./scripts/main.js"></script>

@@ -1,10 +1,9 @@
 var objData = [];
 
 const editDiv = document.querySelector(".editar-div");
+const divTextos = document.getElementById("textos");
 
 function getData(){
-    const divTextos = document.getElementById("textos");
-
     chrome.storage.local.get( ["ew1n-expander"]).then(async (result) => {
         objData = result["ew1n-expander"] || [];
         if(!Array.isArray(objData)){
@@ -107,7 +106,18 @@ function listenEvents(){
                 if(triggerText.text !== ""){
                     document.getElementById("new_text_edit").textContent = triggerText.text;
                 }
-                editDiv.classList.remove("editar-div-oculto");
+
+                const winHeight = document.body.clientHeight;
+                const textoHeight = divTextos.clientHeight;
+                let headerHeight = winHeight - textoHeight;
+                headerHeight += 100;
+                
+                editDiv.style.height = `${headerHeight}px`;
+
+                divTextos.innerHTML = "";
+                divTextos.style.height = `${headerHeight - 150}px`;
+                
+                editDiv.classList.remove("editar-div-oculto");                
             }
         });
     });
@@ -147,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     });
 
     document.getElementById("done-edit-cancel").addEventListener("click", () => {
+        getData();
         editDiv.classList.add("editar-div-oculto");
     });
 
